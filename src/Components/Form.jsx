@@ -2,10 +2,10 @@ import { useState } from "react";
 
 function Form({setAccount}){
     
-    const [acc, setAcc] = useState({name: '', surname: '',  balance: 0, id: crypto.randomUUID()});
+    const [acc, setAcc] = useState({name: '', surname: '',  balance: 0});
 
     const clickHandler = () => {
-        setAccount(a => [...a, acc]);
+        setAccount(a => [...a, ({...acc, id: crypto.randomUUID()})]);
     }
 
     const handleChange = (event) => {
