@@ -1,7 +1,10 @@
-function DeleteButton({account, setAccount}){
+function DeleteButton({table, setDeleteAccount}){
 
     const clickHandler = () => {
-        setAccount(acc => acc.filter(a=> a.id !== account.id));
+        if(window.confirm("Do you really want to delete this account?")){
+            console.log("Tabe", table);
+            setDeleteAccount(table);
+        }
     }
 
     return (

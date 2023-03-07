@@ -1,29 +1,39 @@
 import { useState } from "react";
 
-function Form({setAccount}){
+function Form({setCreateAccount}){
     
-    const [acc, setAcc] = useState({name: '', surname: '',  balance: 0});
+    const [name, setName] = useState('');
+    const [surname, setSurname] = useState('');
+    const balance = 0;
 
     const clickHandler = () => {
-        setAccount(a => [...a, ({...acc, id: crypto.randomUUID()})]);
-    }
-
-    const handleChange = (event) => {
-        const data = event.target.value;
-        const name = event.target.name
-
-        setAcc(s => ({...s, [name]: data}));
+        if(name === '' || surname === ''){
+            console.log("Name or Surname fields can not be blank")
+            return;
+        }
+        
+        setCreateAccount({
+            name: name,
+            surname: surname,
+            balance: balance
+        });
+        setName('');
+        setSurname('');
     }
 
     return(
         <>
             <div className="form-group">
                 <label htmlFor="accountName">Name</label>
-                <input type="text" name={"name"} onChange={handleChange} placeholder="John"/>
+                <input type="text" name={"name"} value={name} onChange={(e) => {
+                    setName(e.target.value);
+                }} placeholder="Steve"/>
             </div>
             <div className="form-group">
                 <label htmlFor="accountSurname">Surname</label>
-                <input type="text" name={"surname"} onChange={handleChange} placeholder="Leggins"/>
+                <input type="text" name={"surname"} value={surname} onChange={(e) => {
+                    setSurname(e.target.value);
+                }} placeholder="Stevens"/>
             </div>
             <button type="submit" value="Submit" onClick={clickHandler}>Add Account</button>
         </>

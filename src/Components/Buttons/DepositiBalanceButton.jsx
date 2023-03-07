@@ -1,9 +1,10 @@
-function DepositBalanceButton({account, balance, setAccount}){
+function DepositBalanceButton({account, balance, setAccount, setBalance}){
 
     const clickHandler = () => {
 
         const newValue = account.balance + balance;
-        setAccount(acc => acc.map(a => a.id === account.id ? ({...a, balance: newValue}) : a));
+        setAccount(acc => acc.map(a => a.id === account.id ? ({...a, balance: newValue}) : {...a}));
+        setBalance(0);
     }
 
     return (

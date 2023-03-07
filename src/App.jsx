@@ -4,21 +4,45 @@ import Table from './Components/Table';
 import Form from './Components/Form';
 import Stats  from './Components/Stats';
 import { useEffect, useState } from 'react';
+import { create, destroy, read } from './Storage/localStorage';
+
+const KEY = 'accounts';
 
 function App() {
 
-  const [account, setAccount] = useState([]);
+  const [lastUpdate, setLastUpdate] = useState(Date.now());
+  const [createAccount, setCreateAccount] = useState(null);
+  const [table, setTable] = useState(null);
+  const [deleteAccount, setDeleteAccount] = useState(null);
 
   useEffect(() => {
-    console.log(account);
-  }, [account])
+    setTable(read(KEY));
+  }, [lastUpdate]);
+
+  useEffect(() => {
+    if(createAccount === null){
+      return;
+    }
+    create(KEY, createAccount);
+    setLastUpdate(Date.now());
+  }, [createAccount])
+
+  useEffect(() => {
+    if(deleteAccount === null){
+      return;
+    }
+    console.log(deleteAccount.id);
+    destroy(KEY, deleteAccount.id)
+    setLastUpdate(Date.now());
+  }, [deleteAccount]);
 
   return (
     <div className="App">
       <header className="App-header">
-        <Stats account={account}/>
-        <Form setAccount={setAccount}/>
-        <Table account={account} setAccount={setAccount}/>
+      <Form setCreateAccount={setCreateAccount}/>
+      <Table table={table} setDeleteAccount={setDeleteAccount}/>
+        {/* <Stats account={account}/>
+         */}
       </header>
     </div>
   );

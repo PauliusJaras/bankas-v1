@@ -3,13 +3,19 @@ import DepositBalanceButton from "./Buttons/DepositiBalanceButton";
 import WithdrawBalanceButton from "./Buttons/WithdrawBalanceButton";
 import { useState } from "react";
 
-function Table({account, setAccount}){
+function Table({table, setDeleteAccount}){
 
     const [balance, setBalance] = useState(0);
 
     const handleChange = (event) => {
         const value = event.target.value;
         setBalance(Number(value));
+    }
+
+    if(table === null){
+        return (
+            <div>Loading...</div>
+        )
     }
 
     return(
@@ -27,17 +33,18 @@ function Table({account, setAccount}){
                 </thead>
                 <tbody>
                     {
-                        account === null ? null : account.map((acc, index) => 
+                        table === null ? null : table.map((t, index) => 
                         <tr key={index}>
                            <th scope="row">{index}</th>
-                            <td>{acc.name}</td>
-                            <td>{acc.surname}</td>
-                            <td>{acc.balance}</td> 
+                            <td>{t.name}</td>
+                            <td>{t.surname}</td>
+                            <td>{t.balance}</td> 
                             <td>
                                 <input type="number" onChange={handleChange}></input>
-                                <DeleteButton account={acc} setAccount={setAccount}/> 
-                                <WithdrawBalanceButton account={acc} balance={balance} setAccount={setAccount}/> 
-                                <DepositBalanceButton account={acc} balance={balance} setAccount={setAccount}/>
+                                <DeleteButton table={t} setDeleteAccount={setDeleteAccount}/> 
+                                {/*
+                                <WithdrawBalanceButton account={acc} balance={balance} setAccount={setAccount} setBalance={setBalance}/> 
+                                <DepositBalanceButton account={acc} balance={balance} setAccount={setAccount} setBalance={setBalance}/> */}
                             </td>
                         </tr>
                         )
