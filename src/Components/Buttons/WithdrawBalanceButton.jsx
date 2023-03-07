@@ -1,8 +1,17 @@
-function WithdrawBalanceButton({account, balance, setAccount, setBalance}){
+function WithdrawBalanceButton({table, balance, setEditAccount, setBalance}){
 
     const clickHandler = () => {
-        const newValue = account.balance - balance;       
-        setAccount(acc => acc.map(a => a.id === account.id ? ({...a, balance: newValue}) : {...a}));
+        if(balance === null){
+            return;
+        }
+        const newBalance = table.balance - balance;
+        if(newBalance < 0){
+            //Reikia message
+            alert("Not enough money to withdraw")
+            return null;
+        }
+        const editValues = {...table, balance: newBalance};
+        setEditAccount(editValues)
         setBalance(0);
     }
 

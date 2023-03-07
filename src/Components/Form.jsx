@@ -4,12 +4,12 @@ function Form({setCreateAccount}){
     
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
-    const balance = 0;
+    const balance = 0.00;
 
     const clickHandler = () => {
         if(name === '' || surname === ''){
-            console.log("Name or Surname fields can not be blank")
-            return;
+            alert("Name or Surname fields can not be blank")
+            return null;
         }
         
         setCreateAccount({
