@@ -20,7 +20,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(15px + 1vmin);
   color: white;
 }
 
@@ -34,5 +34,93 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+input{
+  max-width: 300px;
+  margin: 5px;
+}
+
+select{
+  max-width: 600px;
+}
+
+.btn{
+  margin: 10px;
+}
+label{
+  margin-right: 5px;
+}
+.right{
+  display:flex;
+}
+
+.top{
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  min-width: 300px;
+  background-color: #212529;
+}
+
+.top>div{
+  border-bottom: rgba(255, 255, 255, 0.253) solid 0.1px;
+}
+
+.form-group{
+  background-color: #212529;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 5px;
+  border-bottom: rgba(255, 255, 255, 0.253) solid 0.1px;
+}
+
+h1{
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+table{
+  max-width: 500px;
+}
+
+.sort:hover{
+  color: darken($color: #8c94b4, $amount: 10%);
+  cursor: n-resize;
+}
+
+.messages {
+  position: fixed;
+  top: 50px;
+  right: 50px;
+  display: flex;
+  flex-direction: column;
+  .message {
+    padding: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    min-width: 200px;
+    border-radius: 5px;
+    margin: 20px;
+    color: white;
+    background-color: gray;
+    &.ok {
+      background-color: #264b96
+    }
+    &.success{
+      background-color: #006f3c;
+    }
+    &.update{
+      background-color: #f9a73e;
+    }
+    &.danger {
+      background-color: #bf212f;
+    }
   }
 }
