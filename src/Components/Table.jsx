@@ -10,7 +10,7 @@ const filterValues = [
     {name: "Show Positive Accounts", id: 'p'}
 ];
 
-function Table({table, setDeleteAccount, setEditAccount, setFilterAccount}){
+function Table({table, setDeleteAccount, setEditAccount, setFilterAccount, setSortData}){
 
     const [balance, setBalance] = useState(0);
     const [filter, setFilter] = useState(null);
@@ -52,9 +52,9 @@ function Table({table, setDeleteAccount, setEditAccount, setFilterAccount}){
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Surname</th>
-                        <th scope="col">Balance</th>
+                        <th scope="col"  className="sort" onClick={() => setSortData("name")}>Name</th>
+                        <th scope="col"  className="sort" onClick={() => setSortData("surname")}>Surname</th>
+                        <th scope="col" className="sort" onClick={() => setSortData("balance")}>Balance</th>
                         <th scope="col">
                             <Filter setFilter={setFilter} filter={filterValues}/>
                         </th>

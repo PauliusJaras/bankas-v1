@@ -4,7 +4,7 @@ import Table from './Components/Table';
 import Form from './Components/Form';
 import Stats  from './Components/Stats';
 import { useEffect, useState } from 'react';
-import { create, destroy, read, edit } from './Storage/localStorage';
+import { create, destroy, read, edit, sort } from './Storage/localStorage';
 import Messages from './Components/Messages';
 
 const KEY = 'accounts';
@@ -18,6 +18,7 @@ function App() {
   const [editAccount, setEditAccount] = useState(null);
   const [filterAccount, setFilterAccount] = useState(null);
   const [messages, setMessages] = useState(null);
+  const [sortData, setSortData] = useState(null);
 
   useEffect(() => {
     setTable(read(KEY));
@@ -29,7 +30,7 @@ function App() {
     }
     create(KEY, createAccount);
     setLastUpdate(Date.now());
-    msg('New account added', 'success');
+    msg(`${createAccount.name} ${createAccount.surname} added to the account list`, 'success');
   }, [createAccount])
 
   useEffect(() => {
@@ -38,7 +39,7 @@ function App() {
     }
     destroy(KEY, deleteAccount.id)
     setLastUpdate(Date.now());
-    msg('User deleted', 'danger');
+    msg(`Account ${deleteAccount.id} deleted`, 'danger');
   }, [deleteAccount]);
 
   useEffect(() => {
@@ -47,7 +48,7 @@ function App() {
     }
     edit(KEY, editAccount)
     setLastUpdate(Date.now());
-    msg('Account updated', 'update')
+    msg(`${editAccount.name} ${editAccount.surname} account updated`, 'update')
   }, [editAccount]);
 
   useEffect(() => {
@@ -58,6 +59,15 @@ function App() {
     setLastUpdate(Date.now());
     msg('Accounts filtered', 'ok')
   }, [filterAccount]);
+
+  useEffect(() => {
+    if(sortData === null){
+      return;
+    }
+    sort(KEY, sortData);
+    setLastUpdate(Date.now());
+    msg('Accounts sorted by: '+ sortData, 'ok');
+  }, [sortData])
 
   const msg = (text, type) => {
     const randID = crypto.randomUUID();
@@ -72,7 +82,7 @@ function App() {
       <header className="App-header">
       <Stats table={table}/>
       <Form setCreateAccount={setCreateAccount}/>
-      <Table table={table} setDeleteAccount={setDeleteAccount} setEditAccount={setEditAccount} setFilterAccount={setFilterAccount}/>
+      <Table table={table} setDeleteAccount={setDeleteAccount} setEditAccount={setEditAccount} setFilterAccount={setFilterAccount} setSortData={setSortData}/>
       {
       messages && <Messages messages={messages}/>
       }

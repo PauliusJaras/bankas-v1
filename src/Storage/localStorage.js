@@ -30,3 +30,15 @@ export const edit = (key, data) => {
     write(key, editedData);
 }
 
+export const sort = (key, sortData) => {
+    console.log(sortData);
+    const allData = read(key);
+    const newData = [...allData]
+    const sortedData = newData.sort((a, b) => {
+        if(a[sortData] < b[sortData]) { return 1; }
+    if(a[sortData] > b[sortData]) { return -1; }
+    return 0;
+    })
+    write(key, sortedData);
+}
+

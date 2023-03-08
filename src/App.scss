@@ -20,7 +20,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(15px + 1vmin);
   color: white;
 }
 
@@ -87,6 +87,11 @@ h1{
 
 table{
   max-width: 500px;
+}
+
+.sort:hover{
+  color: darken($color: #8c94b4, $amount: 10%);
+  cursor: n-resize;
 }
 
 .messages {
