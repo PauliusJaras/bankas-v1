@@ -1,18 +1,19 @@
 function WithdrawBalanceButton({table, balance, setEditAccount, setBalance}){
 
     const clickHandler = () => {
-        if(balance === null){
+        if(balance === null || balance <= 0){
+            document.getElementById(`${table.id}`).value = 0;
             return;
         }
         const newBalance = table.balance - balance;
         if(newBalance < 0){
-            //Reikia message
-            alert("Not enough money to withdraw")
+            document.getElementById(`${table.id}`).value = 0;
             return null;
         }
         const editValues = {...table, balance: newBalance};
         setEditAccount(editValues)
         setBalance(0);
+        document.getElementById(`${table.id}`).value = 0;
     }
 
     return (

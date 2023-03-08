@@ -13,6 +13,7 @@ export const read = key => {
 export const create = (key, data) => {
     const allData = read(key);
     data.id = crypto.randomUUID();
+    data.show = true;
     allData.push(data);
     write(key, allData);
 }
@@ -26,6 +27,6 @@ export const destroy = (key, id) => {
 export const edit = (key, data) => {
     const allData = read(key);
     const editedData = allData.map(a => data.id === a.id ? {...data} : {...a});
-    console.log(editedData);
     write(key, editedData);
 }
+

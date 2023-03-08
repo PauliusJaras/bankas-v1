@@ -1,8 +1,10 @@
-function Stats({account}){
+function Stats({table}){
     return (
         <>
-            <div>Total accounts: {account === null ? 0 : account.length}</div>
-            <div>Total balance: {account === null ? 0 : account.reduce((accumulator, currentValue) => accumulator+currentValue.balance, 0)}</div>
+            <div className="top">
+                <div>Total accounts: {table === null ? 0 : table.length}</div>
+                <div>Total balance: {table === null ? 0 : table.reduce((accumulator, currentValue) => accumulator+currentValue.balance, 0)}</div>
+            </div>
         </>
     )
 }

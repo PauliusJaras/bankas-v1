@@ -4,7 +4,7 @@ function Form({setCreateAccount}){
     
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
-    const balance = 0.00;
+    const balance = 0;
 
     const clickHandler = () => {
         if(name === '' || surname === ''){
@@ -15,7 +15,7 @@ function Form({setCreateAccount}){
         setCreateAccount({
             name: name,
             surname: surname,
-            balance: balance
+            balance: balance,
         });
         setName('');
         setSurname('');
@@ -35,7 +35,7 @@ function Form({setCreateAccount}){
                     setSurname(e.target.value);
                 }} placeholder="Stevens"/>
             </div>
-            <button type="submit" value="Submit" onClick={clickHandler}>Add Account</button>
+            <button class={"btn btn-success"} type="submit" value="Submit" onClick={clickHandler}>Add Account</button>
         </>
     )
 }
