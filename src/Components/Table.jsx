@@ -3,13 +3,13 @@ import DepositBalanceButton from "./Buttons/DepositiBalanceButton";
 import WithdrawBalanceButton from "./Buttons/WithdrawBalanceButton";
 import { useState } from "react";
 
-function Table({table, setDeleteAccount}){
+function Table({table, setDeleteAccount, setEditAccount}){
 
     const [balance, setBalance] = useState(0);
 
     const handleChange = (event) => {
         const value = event.target.value;
-        setBalance(Number(value));
+        setBalance(parseFloat(value).toFixed(2));
     }
 
     if(table === null){
@@ -42,9 +42,8 @@ function Table({table, setDeleteAccount}){
                             <td>
                                 <input type="number" onChange={handleChange}></input>
                                 <DeleteButton table={t} setDeleteAccount={setDeleteAccount}/> 
-                                {/*
-                                <WithdrawBalanceButton account={acc} balance={balance} setAccount={setAccount} setBalance={setBalance}/> 
-                                <DepositBalanceButton account={acc} balance={balance} setAccount={setAccount} setBalance={setBalance}/> */}
+                                <WithdrawBalanceButton table={t} balance={balance} setEditAccount={setEditAccount} setBalance={setBalance}/> 
+                                <DepositBalanceButton table={t} balance={balance} setEditAccount={setEditAccount} setBalance={setBalance}/>
                             </td>
                         </tr>
                         )

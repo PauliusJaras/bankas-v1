@@ -22,3 +22,10 @@ export const destroy = (key, id) => {
     const deletedData = allData.filter(a => a.id !== id);
     write(key, deletedData);
 }
+
+export const edit = (key, data) => {
+    const allData = read(key);
+    const editedData = allData.map(a => data.id === a.id ? {...data} : {...a});
+    console.log(editedData);
+    write(key, editedData);
+}
