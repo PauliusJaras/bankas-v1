@@ -16,6 +16,7 @@ function Form({setCreateAccount}){
             name: name,
             surname: surname,
             balance: balance,
+            promiseId: crypto.randomUUID()
         });
         setName('');
         setSurname('');
@@ -35,7 +36,7 @@ function Form({setCreateAccount}){
                     setSurname(e.target.value);
                 }} placeholder="Stevens"/>
             </div>
-            <button class={"btn btn-success"} type="submit" value="Submit" onClick={clickHandler}>Add Account</button>
+            <button className={"btn btn-success"} type="submit" value="Submit" onClick={clickHandler}>Add Account</button>
         </>
     )
 }
