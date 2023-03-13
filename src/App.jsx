@@ -4,10 +4,11 @@ import Table from './Components/Table';
 import Form from './Components/Form';
 import Stats  from './Components/Stats';
 import { useEffect, useState } from 'react';
-import { create, destroy, read, edit, sort } from './Storage/localStorage';
 import Messages from './Components/Messages';
+import axios from 'axios'
 
-const KEY = 'accounts';
+//const KEY = 'accounts';
+const URL = 'http://localhost:3003/accounts'
 
 function App() {
 
@@ -16,57 +17,59 @@ function App() {
   const [table, setTable] = useState(null);
   const [deleteAccount, setDeleteAccount] = useState(null);
   const [editAccount, setEditAccount] = useState(null);
-  const [filterAccount, setFilterAccount] = useState(null);
   const [messages, setMessages] = useState(null);
   const [sortData, setSortData] = useState(null);
 
   useEffect(() => {
-    setTable(read(KEY));
+    axios.get(URL).then(res => setTable(res.data));
+
   }, [lastUpdate]);
 
   useEffect(() => {
     if(createAccount === null){
       return;
     }
-    create(KEY, createAccount);
-    setLastUpdate(Date.now());
-    msg(`${createAccount.name} ${createAccount.surname} added to the account list`, 'success');
+
+    axios.post(URL, createAccount)
+    .then(res => {
+      setLastUpdate(Date.now());
+      msg(res.data.message.text, res.data.message.type);
+    })    
   }, [createAccount])
 
   useEffect(() => {
     if(deleteAccount === null){
       return;
     }
-    destroy(KEY, deleteAccount.id)
-    setLastUpdate(Date.now());
-    msg(`Account ${deleteAccount.id} deleted`, 'danger');
+    axios.delete(URL + '/' + deleteAccount.id)
+    .then(res => {
+      setLastUpdate(Date.now());
+      msg(res.data.message.text, res.data.message.type);
+    })
   }, [deleteAccount]);
 
   useEffect(() => {
     if(editAccount === null){
       return;
     }
-    edit(KEY, editAccount)
-    setLastUpdate(Date.now());
-    msg(`${editAccount.name} ${editAccount.surname} account updated`, 'update')
+    axios.put(URL + '/' + editAccount.id, editAccount)
+    .then(res => {
+      setLastUpdate(Date.now());
+      msg(res.data.message.text, res.data.message.type);
+    })
   }, [editAccount]);
 
   useEffect(() => {
-    if(filterAccount === null){
+    if(table === null || sortData === null){
       return;
     }
-    for(let i=0; i < filterAccount.length; i++) {edit(KEY, filterAccount[i])};
-    setLastUpdate(Date.now());
-    msg('Accounts filtered', 'ok')
-  }, [filterAccount]);
-
-  useEffect(() => {
-    if(sortData === null){
-      return;
-    }
-    sort(KEY, sortData);
-    setLastUpdate(Date.now());
-    msg('Accounts sorted by: '+ sortData, 'ok');
+    const newData = [...table]
+    const sortedData = newData.sort((a, b) => {
+    if(a[sortData] < b[sortData]) { return 1; }
+    if(a[sortData] > b[sortData]) { return -1; }
+    return 0;
+    })
+    setTable(sortedData);
   }, [sortData])
 
   const msg = (text, type) => {
@@ -82,7 +85,7 @@ function App() {
       <header className="App-header">
       <Stats table={table}/>
       <Form setCreateAccount={setCreateAccount}/>
-      <Table table={table} setDeleteAccount={setDeleteAccount} setEditAccount={setEditAccount} setFilterAccount={setFilterAccount} setSortData={setSortData}/>
+      <Table table={table} setDeleteAccount={setDeleteAccount} setEditAccount={setEditAccount} setSortData={setSortData}/>
       {
       messages && <Messages messages={messages}/>
       }
